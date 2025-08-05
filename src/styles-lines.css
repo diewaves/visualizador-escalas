@@ -1,0 +1,279 @@
+:root {
+  --root-note: #f12d2d;
+  --thirds: #fba02a;
+  --fifths: #3cc653;
+  --text-color: #f9f9f9;
+  --background-color: #0e0e0e;
+  --interval-color: #f3f78c;
+  --dark-grey: #1e1e1e;
+  --medium-grey: #454545;
+  --grey: #808080;
+  --light-grey: #ccc;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+}
+
+.container {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
+  overflow-x: hidden;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.controls select {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.scale-visual {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-right: 20px;
+}
+.note-label {
+  position: relative;
+}
+.note-box {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--medium-grey);
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 0.5rem;
+}
+
+.interval-line {
+  font-family: monospace;
+  width: 32px;
+  text-align: center;
+  color: var(--interval-color);
+  font-weight: bold;
+}
+
+/* GUITAR */
+
+.tuning {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--grey);
+  display: block;
+  margin-top: 4px;
+}
+.fretboard {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-top: 20px;
+  padding-bottom: 2rem;
+}
+
+.string {
+  display: flex;
+  position: relative;
+  width: fit-content;
+}
+
+.string::after {
+  content: '';
+  border-top: 1.5px dashed var(--medium-grey);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--medium-grey);
+  z-index: -1;
+  left: 50px;
+  width: 100%;
+}
+.string:first-child {
+  counter-reset: fret-counter -1;
+}
+
+.string:first-child .fret {
+  counter-increment: fret-counter;
+  position: relative;
+}
+
+.string:first-child .fret::before {
+  content: counter(fret-counter);
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  top: -28px;
+  color: var(--medium-grey);
+}
+
+.string:first-child .fret:first-child::before {
+  content: '';
+}
+
+.fret {
+  width: 50px;
+  border-right: 1px solid var(--text-color);
+  text-align: center;
+  line-height: 30px;
+  font-size: 12px;
+  background: transparent;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 0;
+}
+
+.fret .note-box {
+  width: 25px;
+  height: 25px;
+  border: none;
+  padding: 2px;
+  color: transparent;
+  font-size: 14px;
+}
+
+.fret:nth-child(2) {
+  border-left: 2px solid var(--text-color);
+}
+
+.fret.in-scale .note-box {
+  background: var(--dark-grey);
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.fret.root-note .note-box {
+  /*! border-color: var(--root-note); */
+  color: var(--text-color);
+  font-weight: bold;
+  border: 2px solid var(--root-note);
+}
+
+/*KEYS*/
+
+.piano {
+  display: flex;
+  height: 80px;
+  position: relative;
+  margin-top: 1rem;
+  width: fit-content;
+  padding-bottom: 2rem;
+}
+
+.key {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: transparent;
+  padding-bottom: 5px;
+  border-radius: 2px;
+  background: var(--background-color);
+  border: 2px solid var(--grey);
+}
+
+.key.white {
+  width: 40px;
+  height: 100%;
+  z-index: 1;
+}
+
+.key.black {
+  width: 30px;
+  height: 60%;
+  margin-left: -15px;
+  margin-right: -15px;
+  z-index: 999 !important;
+}
+
+.key.in-scale {
+  background: var(--dark-grey);
+  z-index: 1;
+}
+
+/*STATES*/
+
+.degree {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: -22px;
+  font-family: 'Arvo', serif;
+  font-size: 14px;
+  color: var(--grey);
+}
+
+.scale-visual .note-box.root-note {
+  border-color: var(--root-note);
+}
+
+.scale-visual .triad-3rd .note-box {
+  border-color: var(--thirds);
+}
+
+.scale-visual .triad-5th .note-box {
+  border-color: var(--fifths);
+}
+
+.fret.triad-3rd .note-box {
+  border: 2px solid var(--thirds);
+}
+
+.fret.triad-5th .note-box {
+  border: 2px solid var(--fifths);
+}
+
+.key.triad-3rd,
+.key.black.in-scale.triad-3rd {
+  border-color: var(--thirds);
+  color: var(--text-color);
+}
+
+.key.triad-5th,
+.key.black.in-scale.triad-5th {
+  border-color: var(--fifths);
+  color: var(--text-color);
+}
+
+.key.root-note,
+.key.black.in-scale.root-note {
+  border-color: var(--root-note);
+  color: var(--text-color);
+}
+
+@media (max-width: 1000px) {
+  .scale-visual,
+  .fretboard {
+    overflow-x: scroll !important;
+  }
+
+  .container {
+    padding-right: 0;
+  }
+}
